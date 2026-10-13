@@ -1,384 +1,143 @@
-\# GymFlow CI/CD — ACEest Fitness \& Gym
+# GymFlow CI/CD
 
+A fitness and gym management application built with Flask, integrated with automated testing, Docker containerization, GitHub Actions, and Jenkins.
 
+**Project Overview**
 
-\## 1. Project Overview
+GymFlow demonstrates how DevOps practices can automate application validation and build processes. The project uses Git for version control, Pytest for testing, Docker for containerization, GitHub Actions for continuous integration, and Jenkins for automated builds.
 
+**Technology Stack**
 
+- Python and Flask
+- Pytest
+- Ruff for code linting
+- Git and GitHub
+- Docker
+- GitHub Actions
+- Jenkins
 
-GymFlow CI/CD is a Flask-based web application developed for the ACEest Fitness \& Gym DevOps assignment. It demonstrates how Git, GitHub, Pytest, Docker, Jenkins, and GitHub Actions can be used together to implement a Continuous Integration and Continuous Delivery (CI/CD) workflow.
-
-
-
-The application provides basic fitness program information, a health-check endpoint, and simple member registration functionality.
-
-
-
-\## 2. Features
-
-
-
-\- Flask REST API
-
-\- Application health-check endpoint
-
-\- Fitness program listing
-
-\- Member registration and listing
-
-\- Automated unit testing using Pytest
-
-\- Code quality checks using Ruff
-
-\- Docker image creation
-
-\- Jenkins-based CI build
-
-\- GitHub Actions workflow triggered by pushes and pull requests
-
-
-
-\## 3. Technology Stack
-
-
-
-\- \*\*Language:\*\* Python
-
-\- \*\*Web framework:\*\* Flask
-
-\- \*\*Testing:\*\* Pytest
-
-\- \*\*Linting:\*\* Ruff
-
-\- \*\*Containerization:\*\* Docker
-
-\- \*\*Source control:\*\* Git and GitHub
-
-\- \*\*CI/CD:\*\* Jenkins and GitHub Actions
-
-
-
-\## 4. Application Endpoints
-
-
-
-| Method | Endpoint | Description |
-
-|---|---|---|
-
-| GET | `/` | Application welcome message |
-
-| GET | `/health` | Application health status |
-
-| GET | `/programs` | List available fitness programs |
-
-| GET | `/members` | List registered members |
-
-| POST | `/members` | Register a member using JSON |
-
-
-
-\### Example member registration
-
-
-
-Request:
-
-
-
-```json
-
-{
-
-&#x20; "name": "Harsha"
-
-}
-
-```
-
-
-
-Send this JSON body with a `POST` request to `/members`. A successful registration returns HTTP status `201`.
-
-
-
-> Note: Member records are stored in memory and are reset when the application restarts.
-
-
-
-\## 5. Prerequisites
-
-
-
-Install the following tools:
-
-
-
-\- Python 3.13 or a compatible Python version
-
-\- Git
-
-\- Docker Desktop
-
-\- A GitHub account
-
-
-
-Jenkins is required to reproduce the local Jenkins CI workflow.
-
-
-
-\## 6. Run Locally
-
-
-
-Clone the repository:
-
-
-
-```bash
-
-git clone https://github.com/Sriharsh001/GymFlow-CI-CD.git
-
-cd GymFlow-CI-CD
-
-```
-
-
-
-Create and activate a virtual environment.
-
-
-
-On Windows:
-
-
-
-```cmd
-
-python -m venv .venv
-
-.venv\\Scripts\\activate
-
-```
-
-
-
-Install dependencies:
-
-
-
-```bash
-
-python -m pip install -r requirements.txt
-
-python -m pip install ruff
-
-```
-
-
-
-Start the application:
-
-
-
-```bash
-
-python app.py
-
-```
-
-
-
-Open `http://localhost:5000` in a browser to access the application.
-
-
-
-\## 7. Run Quality Checks and Tests
-
-
-
-Run Ruff:
-
-
-
-```bash
-
-python -m ruff check app.py tests
-
-```
-
-
-
-Run the unit tests:
-
-
-
-```bash
-
-python -m pytest -v
-
-```
-
-
-
-The current test suite contains five tests covering the home endpoint, health endpoint, fitness programs, successful member registration, and validation of a missing member name.
-
-
-
-\## 8. Docker
-
-
-
-Build the Docker image:
-
-
-
-```bash
-
-docker build -t gymflow-ci-cd:latest .
-
-```
-
-
-
-Run the application container:
-
-
-
-```bash
-
-docker run --rm -p 5000:5000 gymflow-ci-cd:latest
-
-```
-
-
-
-Open `http://localhost:5000` to access the application.
-
-
-
-Run the test suite inside the Docker image:
-
-
-
-```bash
-
-docker run --rm gymflow-ci-cd:latest python -m pytest -v
-
-```
-
-
-
-The Docker image includes the application, dependencies, and test files.
-
-
-
-\## 9. GitHub Actions
-
-
-
-The workflow is defined in `.github/workflows/main.yml`.
-
-
-
-It runs on pushes and pull requests and performs the configured CI checks:
-
-
-
-1\. Check out the repository.
-
-2\. Set up Python.
-
-3\. Install dependencies.
-
-4\. Compile Python files and run Ruff lint checks.
-
-5\. Run unit tests.
-
-6\. Build the Docker image.
-
-
-
-Workflow results are available in the \*\*Actions\*\* tab of the GitHub repository.
-
-
-
-\## 10. Jenkins CI
-
-
-
-A Jenkins Freestyle project named `GymFlow-CI-CD` is configured to pull source code from:
-
-
-
-https://github.com/Sriharsh001/GymFlow-CI-CD.git
-
-
-
-The configured Windows batch build performs these stages:
-
-
-
-1\. Install Python dependencies.
-
-2\. Install Ruff.
-
-3\. Run lint checks.
-
-4\. Run unit tests on Windows.
-
-5\. Build the Docker image.
-
-6\. Run the same unit tests inside the Docker container.
-
-
-
-The build should be considered successful only when all stages pass. Build logs are available through Jenkins \*\*Console Output\*\*.
-
-
-
-\## 11. Repository Structure
-
-
+**Project Structure**
 
 ```text
-
 GymFlow-CI-CD/
-
 ├── .github/
-
 │   └── workflows/
-
 │       └── main.yml
-
 ├── tests/
-
-│   └── test\_app.py
-
-├── .gitignore
-
+│   └── test_app.py
 ├── app.py
-
-├── Dockerfile
-
 ├── requirements.txt
-
+├── Dockerfile
+├── .gitignore
 └── README.md
-
 ```
 
+**Application Features**
 
+- Welcome endpoint
+- Health-check endpoint
+- Fitness program listing
+- Member listing and registration
+- Automated API tests
 
-\## 12. Conclusion
+**Getting Started**
 
+Prerequisites: Python, Git, and Docker if you want to run the containerized version.
 
+1. Clone the repository.
 
-This project demonstrates a basic CI/CD workflow for a Flask application. GitHub provides source control and automated workflow execution, Pytest validates application behavior, Ruff checks code quality, Docker packages the application, and Jenkins independently builds and tests the project.
+   ```bash
+   git clone https://github.com/Sriharsh001/GymFlow-CI-CD.git
+   cd GymFlow-CI-CD
+   ```
 
+2. Install the dependencies.
 
+   ```bash
+   python -m pip install -r requirements.txt
+   ```
 
-The workflow helps identify code issues early and makes application builds more repeatable.
+3. Start the application.
 
+   ```bash
+   python app.py
+   ```
 
+4. Open `http://localhost:5000` in your browser.
 
+**Testing and Code Quality**
+
+Run the automated tests:
+
+```bash
+python -m pytest -v
+```
+
+Check code quality with Ruff:
+
+```bash
+python -m pip install ruff
+python -m ruff check app.py tests
+```
+
+**Docker**
+
+Build the application image:
+
+```bash
+docker build -t gymflow-ci-cd:latest .
+```
+
+Run the application:
+
+```bash
+docker run --rm -p 5000:5000 gymflow-ci-cd:latest
+```
+
+Run the tests inside the Docker image:
+
+```bash
+docker run --rm gymflow-ci-cd:latest python -m pytest -v
+```
+
+**GitHub Actions**
+
+The workflow is defined in `.github/workflows/main.yml` and runs on pushes and pull requests.
+
+The pipeline performs the following steps:
+
+1. Checks out the repository.
+2. Installs the Python dependencies.
+3. Compiles the Python files and checks code quality.
+4. Runs the automated tests.
+5. Builds the Docker image.
+6. Runs the automated tests inside the Docker container.
+
+Workflow results are available in the repository's **Actions** tab.
+
+**Jenkins**
+
+The Jenkins job checks out the latest source code from GitHub and automates the following operations:
+
+- Dependency installation
+- Code linting
+- Automated testing
+- Docker image building
+- Test execution inside the Docker container
+
+A successful build confirms that the configured pipeline stages have completed without errors.
+
+**Learning Outcomes**
+
+This project demonstrates practical implementation of:
+
+- Version control and meaningful Git commits
+- Automated testing with Pytest
+- Code quality checks
+- Docker image creation and containerized testing
+- CI workflow automation using GitHub Actions
+- Automated builds using Jenkins
+
+**Repository**
+
+[GymFlow CI/CD on GitHub](https://github.com/Sriharsh001/GymFlow-CI-CD)

@@ -25,10 +25,13 @@ jobs:
         run: |
           python -m compileall -q app.py tests
           python -m pip install ruff
-          ruff check app.py tests
+          python -m ruff check app.py tests
 
       - name: Run unit tests
         run: python -m pytest -v
 
       - name: Build Docker image
-        run: docker build -t gymflow-ci-cd:latest .
+        run: docker build --no-cache -t gymflow-ci-cd:latest .
+
+      - name: Run tests inside Docker
+        run: docker run --rm gymflow-ci-cd:latest python -m pytest -v
